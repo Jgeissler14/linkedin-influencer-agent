@@ -52,3 +52,13 @@ want to change the topic of your LinkedIn post, you'll need to modify the Agents
 ```shell
 python3 main.py
 ```
+
+### Environment variables for group replies
+
+To generate replies to posts in your LinkedIn groups, set the `LINKEDIN_GROUP_URLS`
+environment variable with a comma separated list of group URLs.
+Example:
+
+```bash
+export LINKEDIN_GROUP_URLS="https://www.linkedin.com/groups/1234/,https://www.linkedin.com/groups/5678/"
+```

@@ -1,6 +1,12 @@
 from crewai import Task
 from textwrap import dedent
-from agents import linkedin_scraper_agent, web_researcher_agent, doppelganger_agent
+from agents import (
+    linkedin_scraper_agent,
+    web_researcher_agent,
+    doppelganger_agent,
+    group_scraper_agent,
+    group_reply_agent,
+)
 
 
 scrape_linkedin_task = Task(
@@ -32,3 +38,22 @@ create_linkedin_post_task = Task(
 )
 
 create_linkedin_post_task.context = [scrape_linkedin_task, web_research_task]
+
+
+scrape_group_posts_task = Task(
+    description=dedent("Scrape the latest posts from the LinkedIn groups"),
+    expected_output=dedent("A dictionary of groups with a list of recent posts"),
+    agent=group_scraper_agent,
+)
+
+generate_group_replies_task = Task(
+    description=dedent(
+        "Generate short professional replies to the scraped group posts"
+    ),
+    expected_output=dedent(
+        "A list of suggested replies for each scraped post"
+    ),
+    agent=group_reply_agent,
+)
+
+generate_group_replies_task.context = [scrape_group_posts_task]

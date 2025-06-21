@@ -7,7 +7,10 @@ from dotenv import load_dotenv
 from langchain_mistralai import ChatMistralAI
 from langchain_openai import ChatOpenAI
 
-from tools import scrape_linkedin_posts_tool
+from tools import (
+    scrape_linkedin_posts_tool,
+    scrape_linkedin_group_posts_tool,
+)
 
 load_dotenv()
 
@@ -63,4 +66,35 @@ doppelganger_agent = Agent(
     verbose=True,
     allow_delegation=False,
     llm=openai_llm
+)
+
+
+group_scraper_agent = Agent(
+    role="LinkedIn Group Scraper",
+    goal="Scrape the latest posts from the LinkedIn groups provided",
+    tools=[scrape_linkedin_group_posts_tool],
+    backstory=dedent(
+        """
+        You are skilled at navigating LinkedIn groups and collecting recent posts
+        for analysis.
+        """
+    ),
+    verbose=True,
+    allow_delegation=False,
+    llm=openai_llm,
+)
+
+group_reply_agent = Agent(
+    role="LinkedIn Group Reply Creator",
+    goal="Write concise replies to posts in LinkedIn groups.",
+    tools=[],
+    backstory=dedent(
+        """
+        You craft short professional replies that encourage discussion while
+        keeping a friendly tone.
+        """
+    ),
+    verbose=True,
+    allow_delegation=False,
+    llm=openai_llm,
 )
