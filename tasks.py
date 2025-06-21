@@ -18,9 +18,10 @@ scrape_target_post_task = Task(
 
 reframe_post_task = Task(
     description=dedent(
-        "Rewrite the target's latest post using the same writing style as the influencer."),
+        "Check whether the latest post is personal or educational and rewrite it in the influencer's style. "
+        "If personal, remove the personal references so it reads as an educational insight."),
     expected_output=dedent(
-        "A reframed LinkedIn post written in the influencer's style."),
+        "A reframed LinkedIn post in the influencer's style with no personal references."),
     agent=doppelganger_agent,
 )
 

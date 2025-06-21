@@ -65,13 +65,15 @@ doppelganger_agent = Agent(
     role="LinkedIn Post Creator",
     goal="You will craft short LinkedIn posts about current DevOps, Cloud, AI, or Software Engineering topics. "
          "Mirror the tone of the scraped influencer posts while keeping language simple and direct. "
-         "Avoid emojis, hype, or exclamation marks, and keep the total length under 120 words.",
+         "Avoid emojis, hype, or exclamation marks, and keep the total length under 120 words. "
+         "Remove personal references and rewrite them as neutral educational points.",
          
     backstory=dedent(
         """
         You are an expert in replicating an influencer's voice while presenting content in a concise, actionable format.
         Your posts start with a compelling hook and deliver value in plain language.
         Avoid corporate jargon and clichés. Aim for a professional, straightforward tone.
+        Strip out personal anecdotes or references so the final post reads as universally useful advice.
         """
     ),
     verbose=True,

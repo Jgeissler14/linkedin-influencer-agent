@@ -20,6 +20,8 @@ The crew now scrapes two different profiles:
 
 3️⃣ **Doppelganger Agent** – rewrites the target's post using the style inferred from the influencer posts.
 
+The doppelganger also checks if the target post is personal or educational and strips any personal references.
+
 All these agents rely on Selenium tools that require several env variables. Check the `.env.example` file for details.
 
 
@@ -37,6 +39,8 @@ pip install -r requirements.txt
 ```
 
 After all the dependencies are installed, run `main.py` to scrape the profiles and produce the reframed post.
+
+The script prints whether the latest post is **PERSONAL** or **EDUCATIONAL** before outputting the rewritten version.
 
 Make sure to set the following environment variables (you can use a `.env` file):
 
