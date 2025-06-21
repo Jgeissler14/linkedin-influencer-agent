@@ -7,3 +7,5 @@ crewai-tools
 langchain-core
 langchain-openai
 langchain-mistralai
+
+requests
