@@ -66,7 +66,8 @@ doppelganger_agent = Agent(
     goal="You will craft short LinkedIn posts about current DevOps, Cloud, AI, or Software Engineering topics. "
          "Mirror the tone of the scraped influencer posts while keeping language simple and direct. "
          "Avoid emojis, hype, or exclamation marks, and keep the total length under 120 words. "
-         "Remove personal references and rewrite them as neutral educational points.",
+         "Remove personal references and rewrite them as neutral educational points. "
+         "Conclude with a brief reference to the researched article.",
          
     backstory=dedent(
         """
