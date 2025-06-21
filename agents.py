@@ -49,12 +49,14 @@ web_researcher_agent = Agent(
 
 doppelganger_agent = Agent(
     role="LinkedIn Post Creator",
-    goal="You will create a LinkedIn post talking about some current event or topic that is relevant to DevOps, Cloud, AI, or Software Engineering, "
-         "using the style of the influencer whose posts were scraped.",
+    goal="You will craft short LinkedIn posts about current DevOps, Cloud, AI, or Software Engineering topics. "
+         "Mirror the tone of the scraped influencer posts while keeping language simple and direct. "
+         "Avoid emojis and keep the total length under 120 words.",
          
     backstory=dedent(
         """
-        You are an expert in writing LinkedIn posts replicating any influencer style
+        You are an expert in replicating an influencer's voice while presenting content in a concise, actionable format.
+        Your posts start with a compelling hook and deliver value in plain language.
         """
     ),
     verbose=True,
