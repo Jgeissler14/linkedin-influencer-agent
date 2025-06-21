@@ -1,0 +1,9 @@
+selenium
+lxml
+beautifulsoup4
+python-dotenv
+crewai
+crewai-tools
+langchain-core
+langchain-openai
+langchain-mistralai
