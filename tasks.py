@@ -20,12 +20,13 @@ web_research_task = Task(
 create_linkedin_post_task = Task(
     description=dedent(
         "Create a concise LinkedIn post about some current event or topic that is relevant to DevOps, Cloud, AI, or Software Engineering. "
-        "Use short sentences and simple vocabulary. Avoid emojis. Start with a strong hook and provide clear practical insight. "
-        "Follow the writing-style expressed in the scraped LinkedIn posts, but keep the post under 120 words."
+        "Use short sentences and simple vocabulary. Avoid emojis, hype, and exclamation marks. "
+        "Start with a strong hook, provide clear practical insight, and keep the post under 120 words. "
+        "Follow the writing-style expressed in the scraped LinkedIn posts."
     ),
     expected_output=dedent(
         "A high-quality LinkedIn post under 120 words that grabs attention in the first line, provides practical value, "
-        "and mirrors the tone of the scraped posts without using emojis or complex wording."
+        "and mirrors the tone of the scraped posts without using emojis, hype, complex wording, or clichés."
     ),
     agent=doppelganger_agent,
 )
