@@ -20,7 +20,10 @@ The crew now scrapes two different profiles:
 
 3️⃣ **Doppelganger Agent** – rewrites the target's post using the style inferred from the influencer posts.
 
+4️⃣ **Web Researcher Agent** – finds a relevant article to reference in the final post.
+
 The doppelganger also checks if the target post is personal or educational and strips any personal references.
+The web researcher provides an article that is cited at the end of the rewritten post.
 
 All these agents rely on Selenium tools that require several env variables. Check the `.env.example` file for details.
 
@@ -48,6 +51,7 @@ Make sure to set the following environment variables (you can use a `.env` file)
 - `INFLUENCER_PROFILE_NAME` – profile handle whose style you want to mimic.
 - `TARGET_PROFILE_NAME` – profile handle whose latest post you want to rewrite.
 - `OPENAI_API_KEY` – API key used by the language model.
+- `SERPER_API_KEY` – API key for searching the web to fetch relevant articles.
 
 ```shell
 python3 main.py
