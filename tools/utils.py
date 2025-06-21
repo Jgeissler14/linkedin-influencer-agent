@@ -48,3 +48,33 @@ def get_linkedin_posts(page_source: str):
         posts.append(post_content)
 
     return posts
+
+
+def is_personal_post(post: str) -> bool:
+    """Return ``True`` if the text appears to reference personal life events."""
+    if not post:
+        return False
+
+    personal_keywords = [
+        " i ",
+        " my ",
+        " me ",
+        " myself",
+        " we ",
+        " our ",
+        " family",
+        " birthday",
+        " wedding",
+        "anniversary",
+        "friend",
+        "mom",
+        "dad",
+        "baby",
+    ]
+    lower = f" {post.lower()} "
+    return any(word in lower for word in personal_keywords)
+
+
+def classify_post(post: str) -> str:
+    """Classify a LinkedIn post as ``PERSONAL`` or ``EDUCATIONAL``."""
+    return "PERSONAL" if is_personal_post(post) else "EDUCATIONAL"

@@ -1,22 +1,30 @@
 from crewai import Crew
 from dotenv import load_dotenv
 
-from agents import linkedin_scraper_agent, web_researcher_agent, doppelganger_agent
-from tasks import scrape_linkedin_task, web_research_task, create_linkedin_post_task
+from agents import (
+    influencer_scraper_agent,
+    target_scraper_agent,
+    doppelganger_agent,
+)
+from tasks import (
+    scrape_influencer_posts_task,
+    scrape_target_post_task,
+    reframe_post_task,
+)
 
 load_dotenv()
 
 
 crew = Crew(
     agents=[
-        linkedin_scraper_agent,
-        web_researcher_agent,
-        doppelganger_agent
+        influencer_scraper_agent,
+        target_scraper_agent,
+        doppelganger_agent,
     ],
     tasks=[
-        scrape_linkedin_task,
-        web_research_task,
-        create_linkedin_post_task
+        scrape_influencer_posts_task,
+        scrape_target_post_task,
+        reframe_post_task,
     ]
 )
 
