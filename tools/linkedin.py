@@ -37,7 +37,7 @@ def scrape_linkedin_posts_fn(profile_name: str) -> list[str]:
     password_input.send_keys(linkedin_password)
     password_input.send_keys(Keys.RETURN)
 
-    time.sleep(5)
+    time.sleep(20)
 
     browser.get(f"https://www.linkedin.com/in/{profile_name}/recent-activity/all/")
 
