@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from langchain_mistralai import ChatMistralAI
 from langchain_openai import ChatOpenAI
 
-from tools import scrape_linkedin_posts_tool
+from tools import scrape_influencer_posts_tool, scrape_target_posts_tool
 
 load_dotenv()
 
@@ -18,13 +18,27 @@ mistral_llm = ChatMistralAI(api_key=os.environ.get("MISTRAL_API_KEY"), model="mi
 scrape_website_tool = ScrapeWebsiteTool()
 search_tool = SerperDevTool()
 
-linkedin_scraper_agent = Agent(
-    role="LinkedIn Post Scraper",
-    goal="Your goal is to scrape a LinkedIn profile to get a list of posts from the given profile",
-    tools=[scrape_linkedin_posts_tool],
+influencer_scraper_agent = Agent(
+    role="Influencer Post Scraper",
+    goal="Scrape posts from the influencer profile to understand the writing style",
+    tools=[scrape_influencer_posts_tool],
     backstory=dedent(
         """
-        You are an experienced programmer who excels at web scraping. 
+        You are an experienced programmer who excels at web scraping.
+        """
+    ),
+    verbose=True,
+    allow_delegation=False,
+    llm=openai_llm
+)
+
+target_scraper_agent = Agent(
+    role="Target Post Scraper",
+    goal="Scrape the latest posts from the target profile",
+    tools=[scrape_target_posts_tool],
+    backstory=dedent(
+        """
+        You efficiently gather the most recent LinkedIn posts from a profile.
         """
     ),
     verbose=True,

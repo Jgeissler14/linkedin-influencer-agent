@@ -1,34 +1,27 @@
 from crewai import Task
 from textwrap import dedent
-from agents import linkedin_scraper_agent, web_researcher_agent, doppelganger_agent
+from agents import influencer_scraper_agent, target_scraper_agent, doppelganger_agent
 
-
-scrape_linkedin_task = Task(
+scrape_influencer_posts_task = Task(
     description=dedent(
-        "Scrape a LinkedIn profile to get some relevant posts"),
-    expected_output=dedent("A list of LinkedIn posts obtained from a LinkedIn profile"),
-    agent=linkedin_scraper_agent,
+        "Scrape the influencer's LinkedIn profile to get writing style examples."),
+    expected_output=dedent("A list of posts from the influencer profile"),
+    agent=influencer_scraper_agent,
 )
 
-web_research_task = Task(
+scrape_target_post_task = Task(
     description=dedent(
-        "Get valuable and high quality web information about some current event or topic that is relevant to DevOps, Cloud, AI, or Software Engineering"),
-    expected_output=dedent("Your task is to gather high quality information about some current event or topic that is relevant to DevOps, Cloud, AI, or Software Engineering"),
-    agent=web_researcher_agent,
+        "Scrape the target LinkedIn profile to obtain its latest post."),
+    expected_output=dedent("The latest post from the target profile"),
+    agent=target_scraper_agent,
 )
 
-create_linkedin_post_task = Task(
+reframe_post_task = Task(
     description=dedent(
-        "Create a concise LinkedIn post about some current event or topic that is relevant to DevOps, Cloud, AI, or Software Engineering. "
-        "Use short sentences and simple vocabulary. Avoid emojis, hype, and exclamation marks. "
-        "Start with a strong hook, provide clear practical insight, and keep the post under 120 words. "
-        "Follow the writing-style expressed in the scraped LinkedIn posts."
-    ),
+        "Rewrite the target's latest post using the same writing style as the influencer."),
     expected_output=dedent(
-        "A high-quality LinkedIn post under 120 words that grabs attention in the first line, provides practical value, "
-        "and mirrors the tone of the scraped posts without using emojis, hype, complex wording, or clichés."
-    ),
+        "A reframed LinkedIn post written in the influencer's style."),
     agent=doppelganger_agent,
 )
 
-create_linkedin_post_task.context = [scrape_linkedin_task, web_research_task]
+reframe_post_task.context = [scrape_influencer_posts_task, scrape_target_post_task]

@@ -11,24 +11,16 @@
 
 ## Description 
 
-This repository contains a crewAI application for generating LinkedIn posts automatically. 
-The crew consists of [three agents](agents.py):
+This repository contains a crewAI application for reframing LinkedIn posts.
+The crew now scrapes two different profiles:
 
-1️⃣ LinkedIn Scraper Ninja 
+1️⃣ **Influencer Scraper** – pulls a couple of posts from the influencer profile (set with `INFLUENCER_PROFILE_NAME`) to learn the desired writing style.
 
-It uses a [Selenium custom tool](tools%2Flinkedin.py) to scrape my LinkedIn profile. I need to scrape my
-posts since I want some examples for the last agent to emulate my writing style. This tool needs some env variables,
-defined in an `.env` file (you can see an example [here](.env.example)).
+2️⃣ **Target Scraper** – grabs the latest post from the target profile (set with `TARGET_PROFILE_NAME`).
 
-2️⃣ Web Researcher
+3️⃣ **Doppelganger Agent** – rewrites the target's post using the style inferred from the influencer posts.
 
-It fetches relevant information about a given topic. In my case, I chose the recent release of Llama3 by Meta AI, but
-you can choose whatever you want (you'll need to modify the Tasks and Agents of course ...)
-
-3️⃣ Influencer Agent
-
-This agent has to deal with the information gathered by the two previous agents and write a high quality and engaging 
-LinkedIn post emulating my writing style.
+All these agents rely on Selenium tools that require several env variables. Check the `.env.example` file for details.
 
 
 <p align="center">
@@ -44,10 +36,14 @@ First of all, install the necessary dependencies.
 pip install -r requirements.txt
 ```
 
-After all the dependencies are installed, run the `main.py`.
+After all the dependencies are installed, run `main.py` to scrape the profiles and produce the reframed post.
 
-> Keep in mind that you need to have all the necessary env variables in your `.env` file for this to work. Also, if you
-want to change the topic of your LinkedIn post, you'll need to modify the Agents and Tasks.
+Make sure to set the following environment variables (you can use a `.env` file):
+
+- `LINKEDIN_EMAIL` / `LINKEDIN_PASSWORD` – credentials for logging into LinkedIn.
+- `INFLUENCER_PROFILE_NAME` – profile handle whose style you want to mimic.
+- `TARGET_PROFILE_NAME` – profile handle whose latest post you want to rewrite.
+- `OPENAI_API_KEY` – API key used by the language model.
 
 ```shell
 python3 main.py
