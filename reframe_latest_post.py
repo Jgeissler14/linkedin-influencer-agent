@@ -42,7 +42,7 @@ outreach_prompt = ChatPromptTemplate.from_messages([
     (
         "system",
         "You craft short LinkedIn outreach messages about Terraform and cloud services. "
-        "Reference the person's post and invite them to chat. Keep it under 80 words.",
+        "Reference the person's post and invite them to chat. Keep it under 200 characters",
     ),
     (
         "user",
