@@ -3,7 +3,12 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 
-from tools import scrape_linkedin_posts_fn, classify_post
+import json
+from tools import (
+    scrape_linkedin_posts_fn,
+    scrape_linkedin_posts_with_urls_fn,
+    classify_post,
+)
 
 load_dotenv()
 
@@ -14,17 +19,13 @@ if not influencer_profile or not target_profile:
     raise SystemExit("INFLUENCER_PROFILE_NAME and TARGET_PROFILE_NAME must be set")
 
 influencer_posts = scrape_linkedin_posts_fn(influencer_profile)
-target_posts = scrape_linkedin_posts_fn(target_profile)
+target_posts = scrape_linkedin_posts_with_urls_fn(target_profile)
 
-latest_post = target_posts[0] if target_posts else ""
 style_examples = "\n\n".join(influencer_posts)
-
-post_type = classify_post(latest_post)
-print(f"Post type: {post_type}")
 
 llm = ChatOpenAI(api_key=os.environ.get("OPENAI_API_KEY"), model="gpt-3.5-turbo-0125")
 
-prompt = ChatPromptTemplate.from_messages([
+reframe_prompt = ChatPromptTemplate.from_messages([
     (
         "system",
         "You rewrite LinkedIn posts while mimicking a specific writing style. "
@@ -35,9 +36,34 @@ prompt = ChatPromptTemplate.from_messages([
         "Rewrite the following post in the given style.\n\nPost:\n{post}\n\nStyle examples:\n{style}\n",
     ),
 ])
-chain = prompt | llm
+reframe_chain = reframe_prompt | llm
 
-result = chain.invoke({"post": latest_post, "style": style_examples})
+outreach_prompt = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        "You craft short LinkedIn outreach messages about Terraform and cloud services. "
+        "Reference the person's post and invite them to chat. Keep it under 80 words.",
+    ),
+    (
+        "user",
+        "Post:\n{post}\n\nReframed version:\n{reframed}\n",
+    ),
+])
+outreach_chain = outreach_prompt | llm
 
-print(result.content)
+outputs = []
+
+for entry in target_posts:
+    post_text = entry.get("post", "")
+    url = entry.get("url", "")
+    post_type = classify_post(post_text)
+    print(f"Post type: {post_type}")
+    reframed = reframe_chain.invoke({"post": post_text, "style": style_examples}).content
+    outreach = outreach_chain.invoke({"post": post_text, "reframed": reframed}).content
+    outputs.append({"post": post_text, "url": url, "response": outreach})
+
+with open("output.json", "w") as f:
+    json.dump(outputs, f, indent=2)
+
+print(json.dumps(outputs, indent=2))
 
