@@ -50,6 +50,20 @@ def get_linkedin_posts(page_source: str):
     return posts
 
 
+def get_linkedin_posts_with_urls(page_source: str):
+    """Return LinkedIn posts along with their URLs."""
+    containers = parse_html_content(page_source)
+    posts = []
+
+    for container in containers:
+        post_content = get_post_content(container, "div", {"class": "update-components-text"})
+        urn = container.get("data-urn", "")
+        url = f"https://www.linkedin.com/feed/update/{urn}/" if urn else ""
+        posts.append({"post": post_content, "url": url})
+
+    return posts
+
+
 def is_personal_post(post: str) -> bool:
     """Return ``True`` if the text appears to reference personal life events."""
     if not post:
