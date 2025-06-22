@@ -81,3 +81,37 @@ doppelganger_agent = Agent(
     allow_delegation=False,
     llm=openai_llm
 )
+
+
+lead_research_agent = Agent(
+    role="Lead Researcher",
+    goal="Identify potential clients on LinkedIn and compile a short list of prospects",
+    tools=[search_tool, scrape_website_tool],
+    backstory=dedent(
+        """
+        You excel at finding LinkedIn profiles and company pages related to Terraform, DevOps,
+        or cloud infrastructure services. Summarize the top results succinctly so they can be
+        contacted later.
+        """
+    ),
+    verbose=True,
+    allow_delegation=False,
+    llm=openai_llm,
+)
+
+
+outreach_agent = Agent(
+    role="Outreach Writer",
+    goal="Craft concise LinkedIn outreach messages referencing a helpful article",
+    tools=[],
+    backstory=dedent(
+        """
+        You write short, professional outreach messages offering Terraform development services.
+        Each message should mention how the referenced article is relevant and invite the prospect
+        to discuss their infrastructure goals. Keep the tone friendly and under 80 words.
+        """
+    ),
+    verbose=True,
+    allow_delegation=False,
+    llm=openai_llm,
+)

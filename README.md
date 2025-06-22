@@ -22,6 +22,10 @@ The crew now scrapes two different profiles:
 
 4️⃣ **Web Researcher Agent** – finds a relevant article to reference in the final post.
 
+5️⃣ **Lead Researcher Agent** – searches LinkedIn and the web for potential clients interested in Terraform services.
+
+6️⃣ **Outreach Writer Agent** – crafts a short LinkedIn message to engage those leads.
+
 The doppelganger also checks if the target post is personal or educational and strips any personal references.
 The web researcher provides an article that is cited at the end of the rewritten post.
 
@@ -43,7 +47,7 @@ pip install -r requirements.txt
 
 After all the dependencies are installed, run `main.py` to scrape the profiles and produce the reframed post.
 
-The script prints whether the latest post is **PERSONAL** or **EDUCATIONAL** before outputting the rewritten version.
+The script prints whether the latest post is **PERSONAL** or **EDUCATIONAL** before outputting the rewritten version. It also generates a list of potential leads and an outreach message you can send them.
 
 Make sure to set the following environment variables (you can use a `.env` file):
 
@@ -52,6 +56,7 @@ Make sure to set the following environment variables (you can use a `.env` file)
 - `TARGET_PROFILE_NAME` – profile handle whose latest post you want to rewrite.
 - `OPENAI_API_KEY` – API key used by the language model.
 - `SERPER_API_KEY` – API key for searching the web to fetch relevant articles.
+- `MISTRAL_API_KEY` – optional API key for the Mistral language model.
 
 ```shell
 python3 main.py
