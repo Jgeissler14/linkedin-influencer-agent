@@ -12,11 +12,11 @@
 ## Description 
 
 This repository contains a crewAI application for reframing LinkedIn posts.
-The crew now scrapes two different profiles:
+The crew uses several specialized agents:
 
-1️⃣ **Influencer Scraper** – pulls a couple of posts from the influencer profile (set with `INFLUENCER_PROFILE_NAME`) to learn the desired writing style.
+1️⃣ **Influencer Scraper** – pulls a couple of posts from a chosen influencer profile to learn the desired writing style.
 
-2️⃣ **Target Scraper** – grabs the latest post from the target profile (set with `TARGET_PROFILE_NAME`).
+2️⃣ **Target Scraper** – grabs the latest post from a target profile so it can be rewritten.
 
 3️⃣ **Doppelganger Agent** – rewrites the target's post using the style inferred from the influencer posts.
 
@@ -52,8 +52,6 @@ The script prints whether the latest post is **PERSONAL** or **EDUCATIONAL** bef
 Make sure to set the following environment variables (you can use a `.env` file):
 
 - `LINKEDIN_EMAIL` / `LINKEDIN_PASSWORD` – credentials for logging into LinkedIn.
-- `INFLUENCER_PROFILE_NAME` – profile handle whose style you want to mimic.
-- `TARGET_PROFILE_NAME` – profile handle whose latest post you want to rewrite.
 - `OPENAI_API_KEY` – API key used by the language model.
 - `SERPER_API_KEY` – API key for searching the web to fetch relevant articles.
 - `MISTRAL_API_KEY` – optional API key for the Mistral language model.
