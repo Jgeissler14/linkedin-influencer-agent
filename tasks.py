@@ -5,6 +5,8 @@ from agents import (
     target_scraper_agent,
     web_researcher_agent,
     doppelganger_agent,
+    lead_research_agent,
+    outreach_agent,
 )
 
 scrape_influencer_posts_task = Task(
@@ -41,3 +43,24 @@ reframe_post_task = Task(
 )
 
 reframe_post_task.context = [scrape_influencer_posts_task, scrape_target_post_task, research_article_task]
+
+
+search_prospects_task = Task(
+    description=dedent(
+        "Research LinkedIn for potential clients interested in Terraform or cloud infrastructure services. "
+        "Provide a brief list of up to five promising leads with profile URLs."
+    ),
+    expected_output=dedent("A concise list of prospect names and LinkedIn URLs"),
+    agent=lead_research_agent,
+)
+
+compose_outreach_task = Task(
+    description=dedent(
+        "Write a short LinkedIn outreach message that references the researched article "
+        "and invites the prospect to discuss their infrastructure needs."
+    ),
+    expected_output=dedent("An outreach message under 80 words"),
+    agent=outreach_agent,
+)
+
+compose_outreach_task.context = [research_article_task, search_prospects_task]
